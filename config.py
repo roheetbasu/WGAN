@@ -1,3 +1,4 @@
+import torch
 #All hyper parameters
 
 IMG_SHAPE = (28 ,28 ,1)
@@ -14,3 +15,5 @@ GP_WEIGHT = 10.0
 LEARNING_RATE = 0.0002
 ADAM_BETA_1 = 0.5
 ADAM_BETA_2 = 0.9
+
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
