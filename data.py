@@ -9,3 +9,10 @@ def get_dataloader(batch_size: int = BATCH_SIZE, data_root: str = "./data"):
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.5,), std=(0.5,)),
     ])
+    
+    dataset = datasets.MNIST(
+        root = data_root,
+        train = True,
+        download = True,
+        transform = transform,
+    )
