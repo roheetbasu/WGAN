@@ -16,3 +16,13 @@ def get_dataloader(batch_size: int = BATCH_SIZE, data_root: str = "./data"):
         download = True,
         transform = transform,
     )
+    
+    loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        drop_last=True,
+        num_workers=2,
+        pin_memory=True
+    )
+    return loader
