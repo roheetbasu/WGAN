@@ -13,3 +13,9 @@ class Generator(nn.Module):
             nn.LeakyReLU(0.2, inplace=True)
         )
 
+        self.up1 = nn.Sequential(
+            nn.Upsample(scale_factor=2, mode="nearest"),
+            nn.Conv2d(256, 128, kernel_size=3, padding=1, bias=False)
+            nn.BatchNorm2d(128),
+            nn.LeakyReLU(0.2, inplace=True)
+        )
