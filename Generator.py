@@ -42,3 +42,10 @@ class Generator(nn.Module):
     def forward(self, z:Tensor):
         x = self.project(z)
         x = x.view(-1, 256, 4 , 4)
+        x = self.up1(x)
+        x = self.up2(x)
+        x = self.up3(x)
+        return self.crop(x)
+    
+def build_generator(noise_dim: int = NOISE_DIM):
+    return Generator(noise_dim=NOISE_DIM)
