@@ -35,3 +35,9 @@ class Discriminator(nn.Module):
             nn.Dropout(0.2),
             nn.Linear(512 * 2 * 2,1) # no sigmoid - raw critic score      
         )
+        
+        def forward(self, img):
+            return self.net(img)
+        
+def build_discriminator(img_shape: tuple = IMG_SHAPE) -> Discriminator:
+    return Discriminator(img_shape=img_shape)
