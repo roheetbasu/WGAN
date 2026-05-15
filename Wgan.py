@@ -49,4 +49,17 @@ class WGANTrainer:
             self.d_optimizer.step()
             
             return total_d_loss.item()
+        
+        def _train_generator(self, batch_size: int):
+            z = torch.randn(batch_size, self.latent_dim, device=self.device)
+            fake_images = self.generator(z)
+            fake_scores = self.discriminator(fake_images)
+            
+            g_loss = generator_loss(fake_scores)
+            
+            self.g_optimizer.zero_grad()
+            g_loss.backward()
+            self.g_optimizer.step()
+            
+            return g_loss.item()
        
