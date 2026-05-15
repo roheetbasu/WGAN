@@ -62,4 +62,32 @@ class WGANTrainer:
             self.g_optimizer.step()
             
             return g_loss.item()
+        
+        def train_epoch(self, dataloader: DataLoader):
+            
+            self.generator.train()
+            self.discriminator.train()
+            
+            total_d, total_g, n_batch = 0.0, 0.0, 0
+            
+            for batch_idx, (real_images, _) in enumerate(dataloader):
+                real_images = real_images.to(self.device)
+                batch_size = real_images.size(0)
+                
+                # Critic d_steps updates per batch
+                d_loss = 0.0
+                for _ in range(self.d_steps):
+                    d_loss = self.train_critic(real_images)
+                
+                # generator 1 update per batch    
+                g_loss = self.train_critic(real_images)
+                
+                total_d += d_loss
+                total_g += g_loss
+                n_batches += 1
+                
+            return {
+                "d_loss": total_d / n_batches,
+                "g_loss": total_g/ n_batches
+            }
        
