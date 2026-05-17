@@ -90,4 +90,20 @@ class WGANTrainer:
                 "d_loss": total_d / n_batches,
                 "g_loss": total_g/ n_batches
             }
-       
+        
+        
+        def fit(
+            self,
+            dataloader: DataLoader,
+            epochs: int,
+            callbacks: list,
+        ):
+            for epoch in range(epochs):
+                logs = self.train_epoch(dataloader)
+                print(
+                    f"Epoch [{epoch + 1:>3}/{epochs}]  "
+                    f"d_loss: {logs['d_loss']:+.4f}  "
+                    f"g_loss: {logs['g_loss']:+.4f}"
+                )
+                for cb in callbacks:
+                    cb.on_epoch_end(epoch, trainer=self, logs=logs)
